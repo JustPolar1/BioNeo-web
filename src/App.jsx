@@ -4,13 +4,30 @@ import './App.css';
 import BarLeft from './components/dashboard/BarLeft';
 import Dashboard from './components/dashboard/Dashboard';
 import BoardHeader from './components/dashboard/mainBoard/BoardHeader';
+import MainBoard from "./components/dashboard/mainBoard/MainBoard";
+import Profile from './components/dashboard/mainBoard/rightPanel/Profile';
+
+const avril = {
+    name: "Avril Caraveo",
+    image: "https://th.bing.com/th/id/OIP.qw42y3S9KyR2Wn9JVAWArgHaHa?r=0&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3",
+    email: "avrilsita@gmail.com"
+}
+
 
 function App() {
   return (
     <>  
       <BarLeft></BarLeft>
       <div className="flex overflow-y-auto flex-col w-full shadow-[-8px_8px_18px_0_rgba(0,0,0,0.2)] bg-white dark:bg-gray-900 rounded-4xl my-1 mr-1 ">
-        <BoardHeader />
+        <div className='flex gap-5'>
+          <div className='flex-1'>
+            <BoardHeader />
+            <main className="flex flex-row justify-between py-5 pl-5">
+              <MainBoard />
+            </main>
+          </div>
+          <Profile image={avril.image} name={avril.name} email={avril.email} />
+        </div>
       </div>
     </>
   );
