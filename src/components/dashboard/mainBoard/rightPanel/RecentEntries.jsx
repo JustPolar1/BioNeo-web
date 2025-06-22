@@ -5,7 +5,7 @@ export default function RecentEntry () {
         <article className="w-full bg-[#00000080]] flex p-2 rounded-xl justify-between">
             <div className="flex flex-col">
                 <h1 className="font-bold text-l text-[#a54b37]">Caca de vaca</h1>
-                <p className="text-sm">$500.00</p>
+                <p className="text-sm text-black dark:text-white">$500.00</p>
             </div>
             <button>
                 <BsArrowRightSquareFill 

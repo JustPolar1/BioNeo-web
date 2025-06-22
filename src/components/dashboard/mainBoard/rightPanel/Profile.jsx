@@ -6,7 +6,7 @@ export default function Profile ({image, name, email}) {
             <div className="flex gap-5 justify-center items-center">
                 <img className="w-12 rounded-full" src={image} />
                 <div className="flex flex-col">
-                    <h1 className="font-bold text-l">{name}</h1>
+                    <h1 className="font-bold text-l text-black dark:text-white">{name}</h1>
                     <p className="text-sm text-gray-500 text-bold">{email}</p>
                 </div>
             </div>

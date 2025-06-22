@@ -9,9 +9,6 @@
   :root {
     --text-gradient: linear-gradient(90deg, #ffffff 48%, #5c5c5c 100%);
   }
-  #root {
-    color: #FFFFFF;
-  }
 }
 
 #root {
