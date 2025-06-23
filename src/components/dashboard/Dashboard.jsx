@@ -17,7 +17,7 @@ export default function Dashboard() {
                 <div className='flex gap-5'>
                     <div className='flex-1'>
                         <BoardHeader />
-                        <main className="flex flex-row justify-between pb-5 pl-5">
+                        <main className="flex flex-col justify-between pb-5 pl-5 gap-5">
                         <MainBoard />
                         </main>
                     </div>

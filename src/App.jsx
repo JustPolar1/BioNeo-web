@@ -12,7 +12,7 @@ function App() {
             <LogIn />
           </div>
           } />
-        <Route path='/dashboard' element={
+        <Route path='/' element={
           <div className='bg-[radial-gradient(ellipse_at_bottom_right,_#2fba87_65%,_#00fa9f_100%)] flex w-full'>
             <Dashboard />
           </div>

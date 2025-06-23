@@ -37,9 +37,16 @@ export default function LogIn() {
                         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
                         ¿Cómo me registro?
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-300">
-                        Solo necesitas crear una cuenta con tu correo electrónico, confirmar tu dirección y empezar a usar la plataforma.
-                        </p>
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-gray-600 dark:text-gray-300">
+                            Para crear una cuenta será necesario descargar la aplicación móvil de BioNeo
+                            y hacer el registro desde tu app
+                            </p>
+                            <img 
+                            src="src\assets\registro.jpeg"
+                            className="w-1/2 rounded-xl shadow-xl"
+                            />
+                        </div>
                     </Modal>
                 </form>
             </main>
