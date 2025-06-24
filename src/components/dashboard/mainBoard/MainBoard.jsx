@@ -1,6 +1,7 @@
 import { BsDropletFill, BsFillBarChartFill, BsPiggyBankFill } from "react-icons/bs";
 import SummaryEntry from "./summary/SummaryEntry";
 import PeriodChanger from "./statistics/PeriodChanger";
+import Statistics from "./statistics/Statistics";
 
 export default function MainBoard () {
     return (
@@ -22,6 +23,7 @@ export default function MainBoard () {
                     </div>
                     <PeriodChanger />
                 </div>
+                <Statistics />
             </section>
         </>    
     )
