@@ -3,13 +3,27 @@ import BoardHeader from './mainBoard/BoardHeader';
 import MainBoard from "./mainBoard/MainBoard";
 import Profile from './mainBoard/rightPanel/Profile';
 
-const avril = {
-    name: "Avril Caraveo",
-    image: "https://th.bing.com/th/id/OIP.qw42y3S9KyR2Wn9JVAWArgHaHa?r=0&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3",
-    email: "avrilsita@gmail.com"
-}
+import { useEffect, useState } from "react";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { app } from '../../../firebaseConfig';
 
 export default function Dashboard() {
+    const [name, setName] = useState("Cargando...");
+
+    useEffect(() => {
+        const fetchName = async () => {
+            const uid = localStorage.getItem("uid");
+            if (!uid) return;
+            const db = getFirestore(app);
+            const userDoc = doc(db, "users", uid);
+            const userSnap = await getDoc(userDoc);
+            if (userSnap.exists()) {
+                setName(userSnap.data().name);
+            }
+        };
+        fetchName();
+    }, []);
+
     return (
         <>
             <BarLeft></BarLeft>
@@ -17,11 +31,15 @@ export default function Dashboard() {
                 <div className='flex gap-5 h-full'>
                     <div className='flex-1 flex flex-col'>
                         <BoardHeader />
-                        <main className="flex overflow-y-auto flex-col justify-between pb-5 pl-5 gap-5 max-h-full">
+                        <main className="flex overflow-y-auto overflow-x-hidden flex-col justify-between pb-5 pl-5 gap-5 max-h-full">
                             <MainBoard />
                         </main>
                     </div>
-                    <Profile image={avril.image} name={avril.name} email={avril.email} />
+                    <Profile 
+                    image="https://th.bing.com/th/id/OIP.qw42y3S9KyR2Wn9JVAWArgHaHa?r=0&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" 
+                    name={name} 
+                    email={localStorage.getItem("email")} 
+                    />
                 </div>
             </div>
         </>

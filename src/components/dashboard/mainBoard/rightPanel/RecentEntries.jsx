@@ -2,10 +2,10 @@ import { BsArrowRightSquareFill } from "react-icons/bs";
 
 export default function RecentEntry () {
     return (
-        <article className="w-full bg-[#00000080] flex p-2 rounded-xl justify-between">
+        <article className="w-full dark:bg-[#003d26] bg-[#dffff3] flex p-2 rounded-xl justify-between">
             <div className="flex flex-col">
-                <h1 className="font-bold text-l text-[#2fba87]">Caca de vaca</h1>
-                <p className="text-sm text-gray-200">$500.00</p>
+                <h1 className="font-bold text-l text-[#2fba87]">Nutrientes</h1>
+                <p className="text-sm dark:text-gray-200 text-black">$500.00</p>
             </div>
             <button>
                 <BsArrowRightSquareFill 

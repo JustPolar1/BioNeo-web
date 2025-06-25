@@ -4,9 +4,34 @@ import FormButton from "./forms/FormButton";
 import Modal from "../Modal";
 
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../firebaseConfig"; // Ajusta la ruta si es necesario
+
+import { useNavigate } from "react-router-dom";
 
 export default function LogIn() {
-    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false); 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError("");
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const uid = userCredential.user.uid;
+            const userEmail = userCredential.user.email;
+
+            localStorage.setItem("email", userEmail)
+            localStorage.setItem("uid", uid); // Guarda la UID en localStorage
+            navigate("/");
+        } catch (err) {
+            setError("Correo o contraseña incorrectos");
+        }
+    };
 
     return (
         <div className="flex w-full h-full">
@@ -23,15 +48,31 @@ export default function LogIn() {
                 </div>            
             </section>
             <main className="flex flex-col justify-center content-center p-18 bg-white dark:bg-gray-900">
-                <form className="flex flex-col gap-7 ">
+                <form className="flex flex-col gap-7" onSubmit={handleLogin}>
                     <h1 className="text-xl text-bold text-center text-gradient adaptable">Inicio de sesión</h1>
-                    <FormInput placeholder="Lorem@ipsum.com" icon={<BsPersonFill size={20} />} type="email" />
-                    <FormInput placeholder="Contraseña" icon={<BsLockFill size={20} />} type="password" />
+                    <FormInput
+                        placeholder="Correo electrónico"
+                        icon={<BsPersonFill size={20} />}
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <FormInput
+                        placeholder="Contraseña"
+                        icon={<BsLockFill size={20} />}
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+
+                    {error && <p className="text-red-500 text-center">{error}</p>}
 
                     <FormButton>Iniciar sesión</FormButton>
 
                     <a className="text-center text-sm dark:text-white underline hover:cursor-pointer"
-                    onClick={() => setIsOpen(true)}>¿Cómo me registro?</a>
+                        onClick={() => setIsOpen(true)}>¿Cómo me registro?</a>
 
                     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
                         <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
@@ -43,7 +84,7 @@ export default function LogIn() {
                             y hacer el registro desde tu app
                             </p>
                             <img 
-                            src="src\assets\registro.jpeg"
+                            src="src/assets/registro.jpeg"
                             className="w-1/2 rounded-xl shadow-xl"
                             />
                         </div>
