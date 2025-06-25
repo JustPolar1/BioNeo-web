@@ -13,12 +13,12 @@ export default function Dashboard() {
     return (
         <>
             <BarLeft></BarLeft>
-            <div className="flex overflow-y-auto flex-col w-full shadow-[-8px_8px_18px_0_rgba(0,0,0,0.2)] bg-white dark:bg-gray-900 rounded-4xl my-1 mr-1 ">
-                <div className='flex gap-5'>
-                    <div className='flex-1'>
+            <div className="flex flex-col w-full shadow-[-8px_8px_18px_0_rgba(0,0,0,0.2)] bg-white dark:bg-gray-900 rounded-4xl my-1 mr-1 ">
+                <div className='flex gap-5 h-full'>
+                    <div className='flex-1 flex flex-col'>
                         <BoardHeader />
-                        <main className="flex flex-col justify-between pb-5 pl-5 gap-5">
-                        <MainBoard />
+                        <main className="flex overflow-y-auto flex-col justify-between pb-5 pl-5 gap-5 max-h-full">
+                            <MainBoard />
                         </main>
                     </div>
                     <Profile image={avril.image} name={avril.name} email={avril.email} />

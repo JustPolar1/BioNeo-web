@@ -1,4 +1,3 @@
-// components/BarChart.jsx
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -10,16 +9,27 @@ import {
   Legend
 } from 'chart.js';
 
-// Registrar los elementos que vas a usar
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export default function Statistics() {
+export default function Statistics({ periodo }) {
+
+  let labels, dataValues;
+
+  if (periodo === 'mes') {
+    labels = ['Enero', 'Febrero', 'Marzo', 'Abril'];
+    dataValues = [150, 200, 180, 220];
+  } else {
+    // Últimas 4 semanas
+    labels = ['Semana 4', 'Semana 3', 'Semana 2', 'Semana 1'];  
+    dataValues = [90, 120, 80, 100]; 
+  }
+
   const data = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+    labels,
     datasets: [
       {
-        label: 'Ventas',
-        data: [150, 200, 180, 220],
+        label: 'Gastos',
+        data: dataValues,
         backgroundColor: 'rgba(75, 192, 192, 0.5)',
         borderRadius: 6,
       },
@@ -30,7 +40,7 @@ export default function Statistics() {
     responsive: true,
     plugins: {
       legend: { position: 'top' },
-      title: { display: true, text: 'Ventas por mes' },
+      title: { display: true, text: `Gastos por ${periodo === 'mes' ? 'mes' : 'últimas 4 semanas'}` },
     },
   };
 
