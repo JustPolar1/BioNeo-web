@@ -8,9 +8,41 @@ import Statistics from "./statistics/Statistics";
 import StatisticsSensors from "./statistics/StatisticsSensors";
 
 export default function MainBoard() {
-  const [periodo, setPeriodo] = useState("mes"); // Estado que controla la vista actual
+    const [periodo, setPeriodo] = useState("mes");
+    // Datos dummy para las estadísticas
+    const gastosMes   = { labels: ['Enero', 'Febrero', 'Marzo', 'Abril'], values: [150, 200, 180, 220] };
+    const gastosSem4 = { labels: ['Semana 4', 'Semana 3', 'Semana 2', 'Semana 1'], values: [90, 120, 80, 100] };
 
-  return (
+    const { labels, values } = periodo === 'mes' ? gastosMes : gastosSem4;
+
+    const sensoresLabels = ['06:00', '09:00', '12:00', '15:00', '18:00', '21:00'];
+
+    const sensoresDatasets = [
+    {
+        label: 'Humedad (%)',
+        data: [60, 55, 50, 48, 52, 58],
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        tension: 0.4,
+    },
+    {
+        label: 'Temperatura (°C)',
+        data: [18, 21, 27, 30, 26, 22],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        tension: 0.4,
+    },
+    {
+        label: 'Luminosidad (lux)',
+        data: [100, 500, 800, 700, 400, 100],
+        borderColor: 'rgba(255, 206, 86, 1)',
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        tension: 0.4,
+        yAxisID: 'luxAxis',
+    },
+    ];
+
+    return (
     <>
       <section className="flex justify-between w-full">
         <SummaryEntry icon={<BsFillBarChartFill size={40} />} title="Ganancias" value="21.79%" />
@@ -30,7 +62,7 @@ export default function MainBoard() {
             <PeriodChanger periodo={periodo} setPeriodo={setPeriodo} />
         </div>
 
-        <Statistics periodo={periodo} />
+        <Statistics periodo={periodo} labels={labels} values={values} />
       </section>
 
       <section>
@@ -43,7 +75,7 @@ export default function MainBoard() {
                 <p className="text-black dark:text-gray-200">Resumen de cada sensor</p>
             </div>
         </div>
-        <StatisticsSensors />
+        <StatisticsSensors labels={sensoresLabels} datasets={sensoresDatasets} />
       </section>
     </>
   );
