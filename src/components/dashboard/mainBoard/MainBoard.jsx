@@ -40,7 +40,7 @@ export default function MainBoard() {
             <BsCurrencyDollar size={48} />
           </span>
           <div className="flex flex-1 flex-col">
-            <h1 className="text-[#2fba87] font-bold text-xl">Gastos realizados</h1>
+            <h1 className="text-[#2fba87] font-bold text-xl">Gastos y ventas realizadas</h1>
             <p className="text-black dark:text-gray-200">Resumen global</p>
           </div>
           <PeriodChanger periodo={periodo} setPeriodo={setPeriodo} />

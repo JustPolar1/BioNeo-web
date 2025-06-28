@@ -11,22 +11,42 @@ export default function Modal({ isOpen, onClose, children }) {
       setTimeout(() => setShow(true), 10);
     } else if (shouldRender) {
       setShow(false);
-      // Espera la duración de la transición antes de desmontar
       const timeout = setTimeout(() => setShouldRender(false), 300);
       return () => clearTimeout(timeout);
     }
   }, [isOpen, shouldRender]);
 
+  // Cerrar con ESC
+  useEffect(() => {
+    if (!shouldRender) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [shouldRender, onClose]);
+
   if (!shouldRender) return null;
+
+  // Manejar clic fuera del modal
+  function handleBackdropClick(e) {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }
 
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 transition-opacity duration-300 ${
         show ? "opacity-100" : "opacity-0"
       }`}
+      onClick={handleBackdropClick} // <-- aquí
     >
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl relative max-w-sm w-full transition-transform duration-300 transform"
-        style={{ transform: show ? "scale(1)" : "scale(0.95)" }}>
+      <div
+        className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl relative max-w-sm w-full transition-transform duration-300 transform"
+        style={{ transform: show ? "scale(1)" : "scale(0.95)" }}
+        onClick={e => e.stopPropagation()} // <-- evita que el clic dentro cierre el modal
+      >
         {children}
         <button
           type="button"
