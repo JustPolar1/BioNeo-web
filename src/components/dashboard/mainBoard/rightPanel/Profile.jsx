@@ -1,6 +1,6 @@
 import RecentEntry from "./RecentEntries"
 
-export default function Profile ({image, name, email}) {
+export default function Profile({ image, name, email, entries = [] }) {
     return (
         <aside className="flex flex-col py-5 pr-5 gap-5">
             <div className="flex gap-5 justify-center items-center">
@@ -11,9 +11,17 @@ export default function Profile ({image, name, email}) {
                 </div>
             </div>
             <section className="flex flex-col gap-5">
-                <RecentEntry />
-                <RecentEntry />
-                <RecentEntry />
+                {entries.length === 0 ? (
+                    <p className="text-gray-400 text-sm text-center">Sin registros recientes</p>
+                ) : (
+                    entries.map((entry, idx) => (
+                        <RecentEntry
+                            key={entry.id || idx}
+                            description={entry.description}
+                            amount={entry.amount}
+                        />
+                    ))
+                )}
             </section>
         </aside>
     )
