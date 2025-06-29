@@ -47,9 +47,23 @@ export default function Dashboard() {
         fetchEntries();
     }, []);
 
+    function handleEntryUpdated(updatedEntry) {
+        setEntries(prev =>
+            prev.map(e => e.id === updatedEntry.id ? { ...e, ...updatedEntry } : e)
+        );
+    }
+
+    function handleEntryDeleted(deletedId) {
+       setEntries(prev => prev.filter(e => e.id !== deletedId));
+    }
+
+    function handleEntryCreated(newEntry) {
+        setEntries(prev => [newEntry, ...prev].slice(0, 3));
+    }
+
     return (
         <>
-            <BarLeft />
+            <BarLeft onEntryCreated={handleEntryCreated} />            
             <div className="flex flex-col w-full shadow-[-8px_8px_18px_0_rgba(0,0,0,0.2)] bg-white dark:bg-gray-900 rounded-4xl my-1 mr-1 ">
                 <div className='flex gap-5 h-full'>
                     <div className='flex-1 flex flex-col'>
@@ -60,9 +74,11 @@ export default function Dashboard() {
                     </div>
                     <Profile 
                         image="https://th.bing.com/th/id/OIP.qw42y3S9KyR2Wn9JVAWArgHaHa?r=0&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" 
-                        name={name} 
-                        email={localStorage.getItem("email")} 
-                        entries={entries} // <-- aquí pasas los registros recientes
+                        name={name}
+                        email={localStorage.getItem("email")}
+                        entries={entries}
+                        onEntryUpdated={handleEntryUpdated}
+                        onEntryDeleted={handleEntryDeleted} // <-- pásala aquí
                     />
                 </div>
             </div>

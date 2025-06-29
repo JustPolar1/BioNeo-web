@@ -1,6 +1,33 @@
-import RecentEntry from "./RecentEntries"
+import { useState, useRef } from "react";
+import RecentEntry from "./RecentEntries";
+import ViewEntryModal from "../../ViewEntryModal";
 
-export default function Profile({ image, name, email, entries = [] }) {
+export default function Profile({ image, name, email, entries = [], onEntryUpdated, onEntryDeleted }) {
+    const [selectedEntry, setSelectedEntry] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const closeTimeout = useRef();
+
+    // En el padre (Profile o Dashboard)
+    function handleEntryUpdated(updatedEntry) {
+        setEntries(prev =>
+            prev.map(e => e.id === updatedEntry.id ? { ...e, ...updatedEntry } : e)
+        );
+    }
+
+    function handleOpenEntry(entry) {
+        if (closeTimeout.current) clearTimeout(closeTimeout.current);
+        setSelectedEntry(entry);
+        setModalOpen(true);
+    }
+
+    function handleCloseModal() {
+        setModalOpen(false);
+        // Espera a que termine la animación de cierre (300ms)
+        closeTimeout.current = setTimeout(() => {
+            setSelectedEntry(null);
+        }, 300);
+    }
+
     return (
         <aside className="flex flex-col py-5 pr-5 gap-5">
             <div className="flex gap-5 justify-center items-center">
@@ -19,10 +46,18 @@ export default function Profile({ image, name, email, entries = [] }) {
                             key={entry.id || idx}
                             description={entry.description}
                             amount={entry.amount}
+                            onView={() => handleOpenEntry(entry)}
                         />
                     ))
                 )}
             </section>
+            <ViewEntryModal
+                isOpen={modalOpen}
+                entry={selectedEntry}
+                onClose={handleCloseModal}
+                onEntryUpdated={onEntryUpdated}
+                onDeleted={onEntryDeleted} // <-- pásala aquí
+            />
         </aside>
-    )
+    );
 }

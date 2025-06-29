@@ -5,7 +5,7 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { app } from "../../../firebaseConfig"; // Ajusta la ruta si es necesario
 
-export default function EntryModal({ isOpen, onClose }) {
+export default function EntryModal({ isOpen, onClose, onEntryCreated }) {
   const [descripcion, setDescripcion] = useState("");
   const [tipo, setTipo] = useState("venta");
   const [valor, setValor] = useState("");
@@ -32,13 +32,24 @@ export default function EntryModal({ isOpen, onClose }) {
     }
     try {
       const db = getFirestore(app);
-      await addDoc(collection(db, "entries"), {
+      const docRef = await addDoc(collection(db, "entries"), {
         description: descripcion,
         type: tipo,
         amount: parseFloat(valor),
         date: serverTimestamp(),
         userId: uid,
       });
+      // Notifica al padre con el nuevo registro (puedes incluir más campos si lo deseas)
+      if (onEntryCreated) {
+        onEntryCreated({
+          id: docRef.id,
+          description: descripcion,
+          type: tipo,
+          amount: parseFloat(valor),
+          date: new Date(), // serverTimestamp no es inmediato, puedes actualizar luego si lo necesitas
+          userId: uid,
+        });
+      }
       setDescripcion("");
       setValor("");
       setTipo("venta");

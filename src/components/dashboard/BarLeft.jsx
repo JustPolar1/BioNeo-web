@@ -5,7 +5,7 @@ import EntryModal from "./EntryModal";
 import { BsHouse, BsBarChartLine, BsSliders, BsBoxArrowLeft, BsPlusCircleFill } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
 
-export default function BarLeft() {
+export default function BarLeft({ onEntryCreated }) {
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
@@ -31,10 +31,11 @@ export default function BarLeft() {
                     <h2 className="text-center text-[#2fba87]">Agregar</h2>
                 </CreateEntry>
             </div>
-            <EntryModal 
-            isOpen={showModal} 
-            onClose={() => setShowModal(false)}
-            />
+            <EntryModal
+                isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                onEntryCreated={onEntryCreated}
+            />        
         </nav>
     );
 }
