@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BsCurrencyDollar, BsDropletFill, BsFillBarChartFill, BsPiggyBankFill } from "react-icons/bs";
 import { PiPottedPlantDuotone } from "react-icons/pi";
 import { getSensorsDataset } from "./statistics/handlers/getSensorsDataset";
+import { getEntriesDataset } from "./statistics/handlers/getEntriesDataset";
 
 import SummaryEntry from "./summary/SummaryEntry";
 import PeriodChanger from "./statistics/PeriodChanger";
@@ -12,10 +13,9 @@ export default function MainBoard() {
   const [periodo, setPeriodo] = useState("mes");
   const [sensoresLabels, setSensoresLabels] = useState([]);
   const [sensoresDatasets, setSensoresDatasets] = useState([]);
-
-  const gastosMes = { labels: ['Enero', 'Febrero', 'Marzo', 'Abril'], values: [150, 200, 180, 220] };
-  const gastosSem4 = { labels: ['Semana 4', 'Semana 3', 'Semana 2', 'Semana 1'], values: [90, 120, 80, 100] };
-  const { labels, values } = periodo === 'mes' ? gastosMes : gastosSem4;
+  const [labels, setLabels] = useState([]);
+  const [ventas, setVentas] = useState([]);
+  const [compras, setCompras] = useState([]);
 
   useEffect(() => {
     async function cargarDatosSensores() {
@@ -25,6 +25,18 @@ export default function MainBoard() {
     }
     cargarDatosSensores();
   }, []);
+
+  useEffect(() => {
+    async function cargarDatosEntradas() {
+      const uid = localStorage.getItem("uid");
+      if (!uid) return;
+      const { labels, valuesVentas, valuesCompras } = await getEntriesDataset(uid, periodo);
+      setLabels(labels);
+      setVentas(valuesVentas);
+      setCompras(valuesCompras);
+    }
+    cargarDatosEntradas();
+  }, [periodo]);
 
   return (
     <>
@@ -46,7 +58,12 @@ export default function MainBoard() {
           <PeriodChanger periodo={periodo} setPeriodo={setPeriodo} />
         </div>
 
-        <Statistics periodo={periodo} labels={labels} values={values} />
+        <Statistics
+          periodo={periodo}
+          labels={labels}
+          valuesVentas={ventas}
+          valuesCompras={compras}
+        />      
       </section>
 
       <section>

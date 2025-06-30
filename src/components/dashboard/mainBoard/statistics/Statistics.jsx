@@ -11,20 +11,27 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export default function Statistics({ periodo, labels, values }) {
+export default function Statistics({ periodo, labels, valuesVentas, valuesCompras }) {
   const data = {
     labels,
     datasets: [
       {
-        label: 'Gastos',
-        data: values,
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        label: 'Ventas',
+        data: valuesVentas,
+        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        borderRadius: 6,
+      },
+      {
+        label: 'Compras',
+        data: valuesCompras,
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
         borderRadius: 6,
       },
     ],
   };
 
   const options = {
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: { position: 'top' },
@@ -33,6 +40,17 @@ export default function Statistics({ periodo, labels, values }) {
         text: `Gastos por ${periodo === 'mes' ? 'mes' : 'últimas 4 semanas'}`,
       },
     },
+    scales: {
+      x: {
+        stacked: true,
+        ticks: {
+          callback: function(value) {
+            return Math.abs(value); // Muestra valores positivos en el eje
+          }
+        }
+      },
+      y: { stacked: true }
+    }
   };
 
   return <Bar data={data} options={options} />;
