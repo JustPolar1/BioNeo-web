@@ -12,10 +12,18 @@ export async function getSensorsDataset() {
 
     const registros = Object.values(snapshot.val());
 
-    // Ordena por timestamp (opcional pero recomendable)
-    registros.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    // Filtrar solo los registros de las últimas 24 horas
+    const ahora = Date.now();
+    const hace24h = ahora - 24 * 60 * 60 * 1000;
+    const registros24h = registros.filter(r => {
+      const t = new Date(r.timestamp).getTime();
+      return t >= hace24h && t <= ahora;
+    });
 
-    const labels = registros.map((r) => {
+    // Ordena por timestamp (opcional pero recomendable)
+    registros24h.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    const labels = registros24h.map((r) => {
       const hora = new Date(r.timestamp);
       return hora.toLocaleTimeString("es-MX", {
         hour: "2-digit",
@@ -24,9 +32,10 @@ export async function getSensorsDataset() {
       });
     });
 
-    const humedad = registros.map((r) => r.humedad);
-    const temperatura = registros.map((r) => r.temperatura);
-    const luminosidad = registros.map((r) => r.luminosidad);
+    const humedad = registros24h.map((r) => r.humedad);
+    const temperatura = registros24h.map((r) => r.temperatura);
+    const luminosidad = registros24h.map((r) => r.luminosidad);
+    const humedadSuelo = registros24h.map((r) => r.humedad_suelo); // <-- Nuevo
 
     const datasets = [
       {
@@ -50,6 +59,13 @@ export async function getSensorsDataset() {
         backgroundColor: "rgba(255, 206, 86, 0.2)",
         tension: 0.4,
         yAxisID: "luxAxis",
+      },
+      {
+        label: "Humedad del suelo (%)", // <-- Nuevo dataset
+        data: humedadSuelo,
+        borderColor: "rgba(153, 102, 255, 1)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
+        tension: 0.4,
       },
     ];
 
