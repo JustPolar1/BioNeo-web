@@ -4,6 +4,7 @@ import { PiPottedPlantDuotone } from "react-icons/pi";
 import { getSensorsDataset } from "./statistics/handlers/getSensorsDataset";
 import { getEntriesDataset } from "./statistics/handlers/getEntriesDataset";
 
+import { getBalance } from "./summary/getBalance";
 import SummaryEntry from "./summary/SummaryEntry";
 import PeriodChanger from "./statistics/PeriodChanger";
 import Statistics from "./statistics/Statistics";
@@ -16,6 +17,13 @@ export default function MainBoard() {
   const [labels, setLabels] = useState([]);
   const [ventas, setVentas] = useState([]);
   const [compras, setCompras] = useState([]);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    const uid = localStorage.getItem("uid");
+    if (!uid) return;
+    getBalance(uid).then(setBalance);
+  }, []);
 
   useEffect(() => {
     async function cargarDatosSensores() {
@@ -42,7 +50,11 @@ export default function MainBoard() {
     <>
       <section className="flex justify-between w-full">
         <SummaryEntry icon={<BsFillBarChartFill size={40} />} title="Ganancias" value="21.79%" />
-        <SummaryEntry icon={<BsPiggyBankFill size={40} />} title="Balance actual" value="$58,127.91" />
+        <SummaryEntry
+          icon={<BsPiggyBankFill size={40} />}
+          title="Balance actual"
+          value={`${balance < 0 ? '-' : ''}$${Math.abs(balance).toFixed(2)}`}
+        />
         <SummaryEntry icon={<BsDropletFill size={40} />} title="Agua ahorrada" value="117 litros" />
       </section>
 
