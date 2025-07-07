@@ -29,7 +29,7 @@ export default function Profile({ image, name, email, entries = [], onEntryUpdat
     }
 
     return (
-        <aside className="flex flex-col py-5 pr-5 gap-5">
+        <section className="flex flex-col py-5 pr-5 gap-5">
             <div className="flex gap-5 justify-center items-center">
                 <img className="w-12 rounded-full" src={image} />
                 <div className="flex flex-col min-w-0">
@@ -58,6 +58,6 @@ export default function Profile({ image, name, email, entries = [], onEntryUpdat
                 onEntryUpdated={onEntryUpdated}
                 onDeleted={onEntryDeleted} // <-- pásala aquí
             />
-        </aside>
+        </section>
     );
 }
