@@ -26,3 +26,4 @@ export async function getBalance(uid) {
 
   return totalVentas - totalCompras;
 }
+

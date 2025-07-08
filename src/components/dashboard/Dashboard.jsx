@@ -2,7 +2,7 @@ import BarLeft from './BarLeft';
 import BoardHeader from './mainBoard/BoardHeader';
 import MainBoard from "./mainBoard/MainBoard";
 import Profile from './mainBoard/rightPanel/Profile';
-import MyCalendar from './mainBoard/rightPanel/Calendar';
+import CalendarWithSummary from './mainBoard/rightPanel/CalendarWithSummary';
 
 import { useEffect, useState } from "react";
 import {
@@ -72,7 +72,7 @@ export default function Dashboard() {
           <aside
             className={`transition-all duration-300 overflow-hidden ${asideOpen ? 'w-70 min-w-[200px] max-w-[320px]' : 'w-5 min-w-5'}`}
           >
-            <div className={`h-full pl-5 w-full transition-opacity duration-300 ${asideOpen ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'}`}>
+            <div className={`h-full pl-5 overflow-y-auto w-full transition-opacity duration-300 ${asideOpen ? 'opacity-100' : 'opacity-0 pointer-events-none select-none'}`}>
               <Profile
                 image="https://th.bing.com/th/id/OIP.qw42y3S9KyR2Wn9JVAWArgHaHa?r=0&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3"
                 name={name}
@@ -81,7 +81,7 @@ export default function Dashboard() {
                 onEntryUpdated={handleEntryUpdated}
                 onEntryDeleted={handleEntryDeleted}
               />
-              <MyCalendar />
+              <CalendarWithSummary />
             </div>
           </aside>
 
