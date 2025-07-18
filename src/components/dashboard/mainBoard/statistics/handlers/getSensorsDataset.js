@@ -1,18 +1,18 @@
-import { ref, get, child, getDatabase } from "firebase/database";
+import { ref, onValue, getDatabase } from "firebase/database";
 import { app } from "../../../../../../firebaseConfig";
 
-export async function getSensorsDataset() {
+export function getSensorsDataset(callback) {
   const database = getDatabase(app);
+  const dbRef = ref(database, "sensors");
 
-  const dbRef = ref(database);
-
-  try {
-    const snapshot = await get(child(dbRef, "sensors"));
-    if (!snapshot.exists()) return { labels: [], datasets: [] };
+  const unsubscribe = onValue(dbRef, (snapshot) => {
+    if (!snapshot.exists()) {
+      callback({ labels: [], datasets: [] });
+      return;
+    }
 
     const registros = Object.values(snapshot.val());
 
-    // Filtrar solo los registros de las últimas 24 horas
     const ahora = Date.now();
     const hace24h = ahora - 24 * 60 * 60 * 1000;
     const registros24h = registros.filter(r => {
@@ -20,7 +20,6 @@ export async function getSensorsDataset() {
       return t >= hace24h && t <= ahora;
     });
 
-    // Ordena por timestamp (opcional pero recomendable)
     registros24h.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
     const labels = registros24h.map((r) => {
@@ -35,7 +34,7 @@ export async function getSensorsDataset() {
     const humedad = registros24h.map((r) => r.humedad);
     const temperatura = registros24h.map((r) => r.temperatura);
     const luminosidad = registros24h.map((r) => r.luminosidad);
-    const humedadSuelo = registros24h.map((r) => r.humedad_suelo); // <-- Nuevo
+    const humedadSuelo = registros24h.map((r) => r.humedad_suelo);
 
     const datasets = [
       {
@@ -61,7 +60,7 @@ export async function getSensorsDataset() {
         yAxisID: "luxAxis",
       },
       {
-        label: "Humedad del suelo (%)", // <-- Nuevo dataset
+        label: "Humedad del suelo (%)",
         data: humedadSuelo,
         borderColor: "rgba(153, 102, 255, 1)",
         backgroundColor: "rgba(153, 102, 255, 0.2)",
@@ -69,9 +68,8 @@ export async function getSensorsDataset() {
       },
     ];
 
-    return { labels, datasets };
-  } catch (error) {
-    console.error("Error al obtener datos de sensores:", error);
-    return { labels: [], datasets: [] };
-  }
+    callback({ labels, datasets });
+  });
+
+  return unsubscribe; // para dejar de escuchar cuando sea necesario
 }

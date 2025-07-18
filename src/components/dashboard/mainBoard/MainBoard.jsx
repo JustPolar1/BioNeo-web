@@ -26,13 +26,14 @@ export default function MainBoard() {
   }, []);
 
   useEffect(() => {
-    async function cargarDatosSensores() {
-      const { labels, datasets } = await getSensorsDataset();
+    const unsubscribe = getSensorsDataset(({ labels, datasets }) => {
       setSensoresLabels(labels);
       setSensoresDatasets(datasets);
-    }
-    cargarDatosSensores();
+    });
+
+    return () => unsubscribe(); // Limpia el listener al desmontar
   }, []);
+
 
   useEffect(() => {
     async function cargarDatosEntradas() {
