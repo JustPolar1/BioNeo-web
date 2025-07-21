@@ -33,7 +33,7 @@ export default function EntryModal({ isOpen, onClose, onEntryCreated }) {
     try {
       const db = getFirestore(app);
       const docRef = await addDoc(collection(db, "entries"), {
-        description: descripcion,
+        description: descripcion.toLowerCase(),
         type: tipo,
         amount: parseFloat(valor),
         date: serverTimestamp(),

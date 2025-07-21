@@ -44,7 +44,7 @@ export default function Profile({ image, name, email, entries = [], onEntryUpdat
                     entries.map((entry, idx) => (
                         <RecentEntry
                             key={entry.id || idx}
-                            description={entry.description}
+                            description={entry.description ? entry.description.charAt(0).toUpperCase() + entry.description.slice(1) : ""}
                             amount={entry.amount}
                             onView={() => handleOpenEntry(entry)}
                         />

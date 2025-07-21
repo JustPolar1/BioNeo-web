@@ -86,7 +86,7 @@ export default function Dashboard() {
           </aside>
 
           <button
-            className="hover:cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gray-300 dark:bg-gray-700 rounded-l-xl shadow w-6 h-12 flex items-center justify-center"
+            className="hover:cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-9 bg-gray-300 dark:bg-gray-700 rounded-l-xl shadow w-6 h-12 flex items-center justify-center"
             onClick={() => setAsideOpen(!asideOpen)}
             title={asideOpen ? 'Ocultar panel' : 'Mostrar panel'}
           >
