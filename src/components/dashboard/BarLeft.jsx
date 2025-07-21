@@ -14,16 +14,21 @@ export default function BarLeft({ onEntryCreated }) {
         navigate("/login");
     }
 
+    function scrollToSection(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
     return (
-        <nav className="w-50 h-screen flex flex-col justify-between items-center">            
+        <nav className="w-55 h-screen flex flex-col justify-between items-center">            
             <div className="m-5 justify-center align-center content-center py-10">
                 <h1 className="text-gradient color-white text-3xl font-bold text-center">BioNeo</h1>
             </div>
             <div className="w-full">
-                <NavIcon><BsHouse color="black"/><span className="text-gradient">Inicio</span></NavIcon>
-                <NavIcon><BsBarChartLine color="black"/><span className="text-gradient">Estadísticas</span></NavIcon>
-                <NavIcon><BsSliders color="black"/><span className="text-gradient">Configuraciones</span></NavIcon>
-                <NavIcon onClick={handleLogoOut}><BsBoxArrowLeft color="black"/><span className="text-gradient">Cerrar sesión</span></NavIcon>
+                <NavIcon onClick={() => scrollToSection("inicio")}><BsHouse color="black"/><span className="text-gradient">Inicio</span></NavIcon>
+                <NavIcon onClick={() => scrollToSection("estadísticas")}><BsBarChartLine color="black"/><span className="text-gradient">Estadísticas</span></NavIcon>                <NavIcon onClick={handleLogoOut}><BsBoxArrowLeft color="black"/><span className="text-gradient">Cerrar sesión</span></NavIcon>
             </div>
             <div className="w-[80%] flex-1 justify-center items-center content-center">
                 <CreateEntry onClick={() => setShowModal(true)}>

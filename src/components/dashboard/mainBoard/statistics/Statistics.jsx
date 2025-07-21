@@ -37,7 +37,7 @@ export default function Statistics({ periodo, labels, valuesVentas, valuesCompra
       legend: { position: 'top' },
       title: {
         display: true,
-        text: `Gastos por ${periodo === 'mes' ? 'mes' : 'últimas 4 semanas'}`,
+        text: `Gastos por ${periodo === 'mes' ? 'últimas 4 semanas' : 'últimos 7 días'}`,
       },
     },
     scales: {

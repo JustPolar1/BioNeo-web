@@ -5,13 +5,13 @@ export default function PeriodChanger({ periodo, setPeriodo }) {
                 active={periodo === "semana"}
                 onClick={() => setPeriodo("semana")}
             >
-                Semanas
+                Semana
             </PeriodButton>
             <PeriodButton
                 active={periodo === "mes"}
                 onClick={() => setPeriodo("mes")}
             >
-                Meses
+                Mes
             </PeriodButton>
         </div>
     );
