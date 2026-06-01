@@ -54,19 +54,14 @@ export default function LogIn() {
             const uid = userCredential.user.uid;
             const userEmail = userCredential.user.email;
 
-            console.log("Firebase Auth registro exitoso", { uid, userEmail, name });
-
             // Guardar datos del usuario en Firestore
             const userDocRef = doc(db, "users", uid);
-            console.log("Intentando guardar usuario en Firestore", { path: userDocRef.path, data: { email: userEmail, name: name, createdAt: "serverTimestamp()" } });
 
             await setDoc(userDocRef, {
                 email: userEmail,
                 nombre: name,
                 createdAt: serverTimestamp()
             });
-
-            console.log("Usuario guardado en Firestore satisfactoriamente", { uid });
 
             localStorage.setItem("email", userEmail)
             localStorage.setItem("uid", uid);

@@ -4,12 +4,19 @@ import NavIcon from "./buttons/NavIcon";
 import EntryModal from "./EntryModal";
 import { BsHouse, BsBarChartLine, BsSliders, BsBoxArrowLeft, BsPlusCircleFill } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebaseConfig";
 
 export default function BarLeft({ onEntryCreated }) {
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
-    function handleLogoOut() {
+    async function handleLogoOut() {
+        try {
+            await signOut(auth);
+        } catch (err) {
+            console.error("Error al cerrar sesión:", err);
+        }
         localStorage.clear();
         navigate("/login");
     }
