@@ -17,6 +17,9 @@ import Statistics from "./statistics/Statistics";
 import StatisticsSensors from "./statistics/StatisticsSensors";
 import { getWeeklySales } from "./summary/getWeeklySales";
 import { getWeeklyPurchases } from "./summary/getWeeklyPurchases";
+import FloatingModalButton from "./FloatingModalButton";
+import { BsPlus } from "react-icons/bs";
+import { GiPlantRoots } from "react-icons/gi";
 
 export default function MainBoard() {
   const [periodo, setPeriodo] = useState("mes");
@@ -122,6 +125,11 @@ export default function MainBoard() {
         </div>
         <StatisticsSensors labels={sensoresLabels} datasets={sensoresDatasets} />
       </section>
+
+      <FloatingModalButton
+        icon={<GiPlantRoots size={32} />}
+        ariaLabel="Abrir modal flotante"
+      />
     </>
   );
 }
