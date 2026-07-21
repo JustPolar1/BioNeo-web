@@ -1,12 +1,13 @@
 import Pot from "./Pot";
 import Sprout from "./Sprout";
-import Expressions from "./Expressions";
+import Face from "./Face/Face";
 import CharacterPart from "./CharacterPart";
 import { defaultLayout } from "./Layout";
 
 export default function Character({
   size = 300,
   scale = 1,
+  emotion = "neutral"
 }) {
   return (
     <div
@@ -27,7 +28,9 @@ export default function Character({
       </CharacterPart>
 
       <CharacterPart layout={defaultLayout.face}>
-        <Expressions/>
+        <Face
+          emotion="embarrassed"
+        />
       </CharacterPart>
 
 
