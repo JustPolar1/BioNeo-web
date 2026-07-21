@@ -1,7 +1,10 @@
 export function Neutral() {
   return (
-    <svg viewBox="0 0 120 140" className="h-40 w-40 absolute" xmlns="http://www.w3.org/2000/svg">
-      {/* Ojos */}
+    <svg
+      viewBox="0 0 120 140"
+      className="w-full h-full"
+    >
+        {/* Ojos */}
       <circle cx="40" cy="80" r="4" fill="#2c2c2c" />
       <circle cx="80" cy="80" r="4" fill="#2c2c2c" />
       
@@ -16,7 +19,23 @@ export function Neutral() {
 }
 
 export function Happy() {
-  return null;
+  return (
+    <svg
+      viewBox="0 0 120 140"
+      className="w-full h-full"
+    >
+      {/* Ojos felices (arcos cerrados) */}
+      <path d="M 34 83 Q 40 73 46 83" fill="none" stroke="#2c2c2c" strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M 74 83 Q 80 73 86 83" fill="none" stroke="#2c2c2c" strokeWidth="3.5" strokeLinecap="round" />
+      
+      {/* Mejillas sonrojadas */}
+      <circle cx="25" cy="95" r="6" fill="#ff9999" opacity="0.7" />
+      <circle cx="95" cy="95" r="6" fill="#ff9999" opacity="0.7" />
+      
+      {/* Boca kawaii (:3) */}
+      <path d="M 50 100 Q 55 107 60 100 Q 65 107 70 100" fill="none" stroke="#2c2c2c" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
 }
 
 export function Sad() {
@@ -27,7 +46,7 @@ export function Sleepy() {
   return null;
 }
 
-export default function Expressions({ emotion = "neutral" }) {
+export default function Expressions({ emotion = "happy" }) {
   const expressions = {
     neutral: <Neutral />,
     happy: <Happy />,
