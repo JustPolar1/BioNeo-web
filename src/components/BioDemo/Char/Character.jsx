@@ -4,6 +4,8 @@ import Face from "./Face/Face";
 import CharacterPart from "./CharacterPart";
 import { defaultLayout } from "./Layout";
 
+import { idleSprout, idleTransition } from "../Motion/idle";
+
 export default function Character({
   size = 300,
   scale = 1,
@@ -19,8 +21,12 @@ export default function Character({
       }}
     >
 
-      <CharacterPart layout={defaultLayout.sprout}>
-        <Sprout/>
+      <CharacterPart
+        layout={defaultLayout.sprout}
+        animate={idleSprout}
+        transition={idleTransition}
+      >
+        <Sprout />
       </CharacterPart>
 
       <CharacterPart layout={defaultLayout.pot}>

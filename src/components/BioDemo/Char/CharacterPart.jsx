@@ -1,9 +1,13 @@
+import { motion } from "framer-motion";
+
 export default function CharacterPart({
   children,
   layout,
+  animate,
+  transition,
 }) {
   return (
-    <div
+    <motion.div
       className="absolute"
       style={{
         left: `${layout.x}%`,
@@ -11,8 +15,10 @@ export default function CharacterPart({
         width: `${layout.width}%`,
         height: `${layout.height}%`,
       }}
+      animate={animate}
+      transition={transition}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

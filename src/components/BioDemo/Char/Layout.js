@@ -9,7 +9,7 @@ export const defaultLayout = {
 
   sprout: {
     x: 30,
-    y: 0,
+    y: 6,
     width: 40,
     height: 45,
   },
