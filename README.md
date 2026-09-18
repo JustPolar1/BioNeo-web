@@ -91,7 +91,6 @@ BioNeo-web/
 ├── package.json
 ├── vite.config.js
 ├── README.md
-└── LICENSE (if present)
 ```
 
 ## Local Development Setup
